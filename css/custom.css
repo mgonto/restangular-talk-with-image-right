@@ -61,7 +61,7 @@ article.developer::before {
   -webkit-filter: blur(0.5px) grayscale(0.3) brightness(0.2);
   -moz-filter: blur(0.5px) grayscale(0.3) brightness(0.2);
   filter: blur(0.5px) grayscale(0.3) brightness(0.2);
-  background-image: url("../img/bartnerd.png");
+  background-image: url("../img/bartnerd.jpg");
   background-position: top;
 }
 
