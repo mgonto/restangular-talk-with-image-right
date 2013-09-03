@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Consuming REST APIs with Restangular: The AngularJS way</title>
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/prism.css">
+        <link rel="stylesheet" href="css/custom.css">
+    </head>
+    <body>
+    <article>
+      <section data-bespoke-state="start">
+        <div class="content">
+          <div class="unbrokenline"></div>
+          <h1>Consuming REST APIs with Restangular</h1>
+          <div class="byline">
+            <div class="classy">
+              by Martin Gontovnikas
+            </div>
+          </div>
+          <h3>@mgonto</h3>
+        </div>
+      </section>
+
+      <section data-bespoke-state="developer">
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              I am a
+            </div>
+          </div>
+          <h2>software developer</h2>
+          <div class="byline">
+            <div class="classy">
+              from Buenos Aires, Argentina
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="steamclock">
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              currently employed by 
+            </div>
+          </div>
+          <h3>Aquicore Inc.</h3>
+          <div class="byline">
+            <div class="classy">
+              making stuff happen
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="programming">
+        <div class="content"></div>
+      </section>
+
+      <section>
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              this talk is about
+            </div>
+          </div>
+          <h3>Learning Restangular</h3>
+          <div class="byline">
+            <div class="classy">
+              and how to consume REST APIs with it
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="content">
+          <h2>So Let's start</h3>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>Let's create a WebApp with AngularJS</h3>
+        </div>
+      </section>
+
+
+      <section data-bespoke-state="livecode">
+        <div class="content">
+          <div data-angular-app="helloWorld">
+            <span>Enter your name</span>
+            <input type="text" ng-model="person" value="" />
+            <p class="hello">Hello <span class="result">{{person}}</span></p>
+          </div>
+          <pre><code class="language-markup">&lt;input type=&quot;text&quot; ng-model=&quot;person&quot; value=&quot;&quot; /&gt;
+&lt;span&gt;Hello &#123;&#123;person&#125;&#125; &lt;/span&gt;</code></pre>
+          
+        </div>
+      </section>
+
+      <section>
+        <div class="content">
+          <h2>I'm sorry to tell you this is not an app</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>There's no real data</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>There's no information</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>We want a centralized point to access it</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="to-the-resque">
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              Look, it's SOAP. 
+              No, it's Remoting. 
+              No, it's
+            </div>
+          </div>
+          <h1><strong>REST-MAN</strong></h1>
+          <div class="unbrokenline"></div>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>AngularJS has $resource for this</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>Let's use it</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content">
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">var User = $resource('/api/v1/user/:userId', {userId:'@id'});
+var user = User.get({userId:123}, function() {
+  user.name = 'Gonto';
+  user.$save();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">var Car = $resource('/api/v1/user/:userId/cars/:carId',
+ {userId:123, carId:'@id'});
+ 
+ var cars = Car.query(function() {
+   var firstCar = cars[0];
+   firstCar.name = "Honda Fit";
+   firstCar.$save();
+ });</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>Let's fetch an user</p>
+          <pre data-line="1"><code class="language-javascript">var User = $resource('/api/v1/user/:userId', {userId:'@id'});
+var user = User.get({userId:123}, function() {
+  user.name = 'Gonto';
+  user.$save();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">var Car = $resource('/api/v1/user/:userId/cars/:carId',
+ {userId:123, carId:'@id'});
+ 
+ var cars = Car.query(function() {
+   var firstCar = cars[0];
+   firstCar.name = "Honda Fit";
+   firstCar.$save();
+ });</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>Let's fetch an user</p>
+          <pre  data-line="2-4"><code class="language-javascript">var User = $resource('/api/v1/user/:userId', {userId:'@id'});
+var user = User.get({userId:123}, function() {
+  user.name = 'Gonto';
+  user.$save();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">var Car = $resource('/api/v1/user/:userId/cars/:carId',
+ {userId:123, carId:'@id'});
+ 
+ var cars = Car.query(function() {
+   var firstCar = cars[0];
+   firstCar.name = "Honda Fit";
+   firstCar.$save();
+ });</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">var User = $resource('/api/v1/user/:userId', {userId:'@id'});
+var user = User.get({userId:123}, function() {
+  user.name = 'Gonto';
+  user.$save();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre data-line="1-2"><code class="language-javascript">var Car = $resource('/api/v1/user/:userId/cars/:carId',
+ {userId:123, carId:'@id'});
+ 
+ var cars = Car.query(function() {
+   var firstCar = cars[0];
+   firstCar.name = "Honda Fit";
+   firstCar.$save();
+ });</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">var User = $resource('/api/v1/user/:userId', {userId:'@id'});
+var user = User.get({userId:123}, function() {
+  user.name = 'Gonto';
+  user.$save();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre data-line="4-8"><code class="language-javascript">var Car = $resource('/api/v1/user/:userId/cars/:carId',
+ {userId:123, carId:'@id'});
+ 
+ var cars = Car.query(function() {
+   var firstCar = cars[0];
+   firstCar.name = "Honda Fit";
+   firstCar.$save();
+ });</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool-gif">
+        <div class="content">
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool">
+        <div class="content">
+          <h2>We need to create one Resource object per entity</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool">
+        <div class="content">
+          <h2>It doesn't handle relationship between data</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool">
+        <div class="content">
+          <h2>It doesn't handle nested RESTFul Resources</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool">
+        <div class="content">
+          <h2>We can't use element's own href</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool">
+        <div class="content">
+          <h2>We can't add configurations per resource agroupation</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="notcool-joey">
+        <div class="content">
+        </div>
+      </section>
+      
+      <section data-bespoke-state="bat-signal">
+        <div class="content">
+          <div class="unbrokenline"></div>
+          <h2>Restangular-Signal</h2>
+          <div class="byline">
+          <div class="classy">
+            I'm Restangulaaar
+          </div>
+        </div>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content">
+          <p>First we configure it</p>
+          <pre data-line="1"><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre data-line="1"><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre data-line="2-4"><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre data-line="1"><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre data-line="2-4"><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();  
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setBaseUrl('/api/v1')</code></pre>
+          
+          <p>Let's fetch an user</p>
+          <pre><code class="language-javascript">Restangular.one('user', 123).get().then(function(user) {
+  $scope.user = user;
+  user.name = 'Gonto';
+  user.put();
+});</code></pre>
+          
+          <p>Let's now fetch his Cars</p>
+          <pre data-line="5"><code class="language-javascript">$scope.user.getList('cars').then(function(cars) {
+  var firstCar = cars[0];
+  firstCar.name = "Honda Fit";
+  firstCar.put();  
+  cars.post({name: 'New Model Extra Cool'});
+});</code></pre>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>You can navigate your hierarchies using all and one</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <pre><code class="language-javascript">Restangular.all('users').one('car', 123).get();
+Restangular.allUrl('users', 'http://example.com/users').all('messages').getList();
+Restangular.one('users', 123).all('cars').getList();
+$scope.user.all('cars').getList();</code></pre>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>What if the element has a link to self?</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content nofade">
+          <p>First we configure it</p>
+          <pre><code class="language-javascript">RestangularProvider.setRestangularFields({
+  selfLink: 'self.href'
+})</code></pre>
+          
+          <p>Let's fetch all users</p>
+          <pre data-line="2-4"><code class="language-javascript">Restangular.all('users').getList().then(function(users) {
+  // user.self.href = 'http://example.com/users/gonto'
+  // This triggers delete to that URL
+  users[0].remove()
+});</code></pre>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>How about adding my own methods and properties?</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content">
+          <p>Let's add the methods</p>
+          <pre><code class="language-javascript">Restangular.addElementTransformer('users', false, function(user) {
+  user.addRestangularMethod('ping', 'post', 'do-ping', {'X-App': 'Example'});
+  return user;
+})
+
+// OR
+
+Restangular.extendModel('users', function(user) {
+  user.addRestangularMethod('ping', 'post', 'do-ping', {'X-App': 'Example'});
+  return user;
+});</code></pre>
+          
+          <p>Let's use it</p>
+          <pre><code class="language-javascript">Restangular.allUrl('users').getList().then(function(users) {
+  users[0].ping();
+  users[0].customPUT({message: 'Hey John'}, 'update-message');
+});</code></pre>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>Can we configure this further?</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code">
+        <div class="content">
+          <pre><code class="language-javascript">Restangular.setRestangularFields({
+  id: '_id.$oid'
+});
+
+Restangular.setResponseInterceptor(function(data, operation, what) {
+  stopLoading();
+  if (operation == 'getList') {
+    return data[what];
+  }
+  return data;
+});
+
+Restangular.setRequestInterceptor(function(elem) {
+  startLoading();
+  delete elem.extraInfo;
+  return elem;
+});
+
+Restangular.setMethodOverriders(['put', 'delete']);
+
+Restangular.setRequestSuffix('.json');
+
+Restangular.setErrorInterceptor(function(response) {
+  stopLoading();
+  displayError();
+});</code></pre>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="code long">
+        <div class="content">
+          <p>Scoped configurations</p>
+          <pre><code class="language-javascript">var BondRestangular = Restangular.withConfig(function(RestangularConfigurer) {
+  RestangularConfigurer.setDefaultHeaders({'X-Auth': 'James Bond'})
+});
+
+BondRestangular.one('place', 12).get();</code></pre>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>It uses ETags by default. You don't have to worry about this</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>It's entirely based on promises</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>It supports all HTTP methods including Patch, Trace, etc.</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>You can run custom operations</h2>
+        </div>
+      </section>
+      
+      <section>
+        <div class="content">
+          <h2>And more</h2>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="bowling">
+        <div class="content">
+        </div>
+      </section>
+      
+      <section data-bespoke-state="link">
+        <div class="content">
+          <h3>Check it out at</h3>
+          </span><a href="https://github.com/mgonto/restangular">github.com/mgonto/restangular</a>
+        </div>
+      </section>
+      
+
+      <section>
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              This is the end of the presentation, so
+            </div>
+          </div>
+          <h3>Thank you for listening</h3>
+          <div class="byline">
+            <div class="classy">
+              or at least pretending to
+            </div>
+          </div>
+        </div>
+      </section> 
+      
+      <section>
+        <div class="content">
+          <h1>Questions?</h1>
+        </div>
+      </section>
+      
+      <section data-bespoke-state="the-end">
+        <div class="content"></div>
+      </section>
+
+      <section data-bespoke-state="final" class="intro">
+        <div class="content">
+          <div class="byline">
+            <div class="classy">
+              This has been
+            </div>
+          </div>
+          <h1>Consuming REST APIs with Restangular</h1>
+          <div class="byline">
+            <div class="classy">
+              by Martin Gontovnikas
+            </div>
+          </div>
+          <h3>@mgonto</h3>
+          <img src="img/yupi.gif">
+        </div>
+      </section>
+
+    </article>
+    <script type="text/javascript">
+      WebFontConfig = {
+        google: { families: [ 'Tauri::latin', 'Alegreya:400italic:latin' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+          '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })(); 
+    </script>
+    <script src="js/bespoke.js"></script>
+    <script src="js/deck.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/app.bootstrap.js"></script>
+    <script src="js/app.basic.js"></script>
+    </body>
+</html>
