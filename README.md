@@ -22,3 +22,5 @@ All images used here are Creative Commons license. Links to the people who made 
 * http://www.flickr.com/photos/32628866@N07/4550142457/
 * http://www.flickr.com/photos/headlouse/1484615917/
 * http://www.flickr.com/photos/cadelagarza/78573962/
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mgonto/restangular-talk/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
